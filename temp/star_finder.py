@@ -10,7 +10,7 @@ class StarFinder:
     '''
     A class to find n_brightest stars in an image.
     Example useage:
-        dir = './data/sample.png'
+        dir = './data/sample.jpg'
         stars = StarFinder(dir)
         stars.find()
         stars.plot(30)
@@ -70,6 +70,10 @@ class StarFinder:
 
         plt.figure(figsize=figsize)
         plt.imshow(self.img, cmap=cmap)
+        for i in sources.index:
+            label = sources.peak[i]
+            plt.annotate(label, (sources.xcentroid[i], sources.ycentroid[i]))
+
         apertures.plot(color='b', lw=1.5, alpha=0.5)
 
 
@@ -82,3 +86,13 @@ class StarFinder:
         '''
         top_n = self.sources[self.sources.peak.isin(self.sources.peak.nlargest(n))]
         return top_n
+
+dir = './data/sample.jpg'
+stars = StarFinder(dir)
+stars.find()
+stars.plot(20)
+
+half_max = (np.max(stars.img) - np.min(stars.img))/2
+nearest = np.abs(stars.img - half_max).argmin()
+fwhm = (stars.img[nearest] -  np.min(stars.img))*2
+fwhm

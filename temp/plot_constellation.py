@@ -40,7 +40,6 @@ top_n = sources[sources.peak.isin(sources.peak.nlargest(50))]
 
 positions = np.transpose((top_n['xcentroid'], top_n['ycentroid']))
 apertures = CircularAperture(positions, r=4.)
-phot_table = aperture_photometry(image, apertures)
 
 plt.figure(figsize=(40,40))
 plt.imshow(img, cmap='gray_r')
